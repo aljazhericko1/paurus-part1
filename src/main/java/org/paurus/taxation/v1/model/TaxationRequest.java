@@ -7,8 +7,8 @@ import lombok.Value;
 public class TaxationRequest {
     @JsonProperty(value = "traderId")
     Long traderId;
-    @JsonProperty(value = "playerAmount")
-    Long playerBetAmount;
-    @JsonProperty(value = "odds")
-    Double decimalOdds;
+    @JsonProperty(value = "playedAmount")
+    Long playedAmount;
+    @JsonProperty(value = "odd")
+    Double decimalOdd;
 }

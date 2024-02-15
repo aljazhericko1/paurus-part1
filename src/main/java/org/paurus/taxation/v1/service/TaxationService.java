@@ -5,7 +5,6 @@ import org.paurus.taxation.v1.db.TraderRepository;
 import org.paurus.taxation.v1.model.TaxationRate;
 import org.paurus.taxation.v1.model.TaxationRequest;
 import org.paurus.taxation.v1.model.TaxationResponse;
-import org.paurus.taxation.v1.model.TaxationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,22 +12,25 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TaxationService {
 
-    TraderRepository traderRepository;
+    private final TraderRepository traderRepository;
 
     public TaxationResponse calculateTaxation(TaxationRequest taxationRequest) {
         // assume the regulation is based on the trader country of registration since the assignment requested the use of data storing
         // in practice we would potentially need to use an IP service to figure out from where the request originated
         String traderCountry = traderRepository.getCountryById(taxationRequest.getTraderId());
         TaxationRate taxationRate = TaxationRate.getByCountryCode(traderCountry);
+        if (taxationRate == null) {
+            throw new IllegalArgumentException(String.format("Unknown text rate for %s", traderCountry));
+        }
 
-        double potentialWinAmount = calculateReturnAmount(taxationRequest.getPlayerBetAmount(), taxationRequest.getDecimalOdds());
+        double potentialWinAmount = calculateReturnAmount(taxationRequest.getPlayedAmount(), taxationRequest.getDecimalOdd());
         return TaxationResponse.builder()
                 .taxRate(taxationRate.getTaxRate())
                 .taxAmount(taxationRate.getTaxAmount())
                 .possibleReturnAmount(potentialWinAmount)
                 // it makes no sense to return the same field twice, would challenge the requirement at work
                 .possibleReturnAmountBeforeTax(potentialWinAmount)
-                .possibleReturnAmountAfterTax(calculatePotentialWinAmountAfterTax(potentialWinAmount, taxationRequest.getPlayerBetAmount(), taxationRate))
+                .possibleReturnAmountAfterTax(potentialWinAmount - calculateTax(potentialWinAmount, taxationRequest.getPlayedAmount(), taxationRate))
                 .build();
     }
 
@@ -36,15 +38,15 @@ public class TaxationService {
         return playerBetAmount * decimalOdds;
     }
 
-    private double calculatePotentialWinAmountAfterTax(double potentialWinAmount, double playerBetAmount, TaxationRate taxationRate) {
+    private double calculateTax(double potentialWinAmount, double playedAmount, TaxationRate taxationRate) {
         return switch (taxationRate.getTaxationType()) {
-            case GENERAL -> calculateAfterTaxAmount(potentialWinAmount, taxationRate);
-            case WINNINGS -> calculateAfterTaxAmount(potentialWinAmount - playerBetAmount, taxationRate);
+            case GENERAL -> calculateTax(potentialWinAmount, taxationRate);
+            case WINNINGS -> calculateTax(potentialWinAmount - playedAmount, taxationRate);
         };
     }
 
-    private double calculateAfterTaxAmount(double taxableAmount, TaxationRate taxationRate) {
-        return Math.min(taxableAmount * taxationRate.getTaxRate(), Math.max(taxableAmount, taxationRate.getTaxAmount()));
+    private double calculateTax(double taxableAmount, TaxationRate taxationRate) {
+        return Math.min(taxableAmount * taxationRate.getTaxRate(), Math.min(taxableAmount, taxationRate.getTaxAmount()));
     }
 
 }

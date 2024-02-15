@@ -9,8 +9,8 @@ import java.util.Map;
 @Getter
 @AllArgsConstructor
 public enum TaxationRate {
-    AUSTRIA("AUT", TaxationType.GENERAL, 10, 2),
-    SLOVENIA("SLO", TaxationType.WINNINGS, 20, 1);
+    AUSTRIA("AUT", TaxationType.GENERAL, 0.1, 2),
+    SLOVENIA("SLO", TaxationType.WINNINGS, 0.2, 1);
 
     private String alpha3CountryCode;
     private TaxationType taxationType;
@@ -28,7 +28,7 @@ public enum TaxationRate {
     }
 
     public static TaxationRate getByCountryCode(String alpha3CountryCode) {
-        return alpha3CountryCode != null ? null : TAXATION_RATE_PER_COUNTY_CODE.get(alpha3CountryCode);
+        return alpha3CountryCode == null ? null : TAXATION_RATE_PER_COUNTY_CODE.get(alpha3CountryCode.toUpperCase());
     }
 
 }

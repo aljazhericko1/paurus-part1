@@ -7,10 +7,7 @@ import org.paurus.taxation.v1.service.TaxationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/taxation/v1")
@@ -19,9 +16,9 @@ public class TaxationController {
 
     private final TaxationService taxationService;
 
-    @RequestMapping(value = "/taxCalculation", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/taxCalculation", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public TaxationResponse getTaxation(TaxationRequest taxationRequest) {
+    public TaxationResponse getTaxation(@RequestBody TaxationRequest taxationRequest) {
         return taxationService.calculateTaxation(taxationRequest);
     }
 
