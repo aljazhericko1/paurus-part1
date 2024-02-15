@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import static org.paurus.taxation.v1.util.TaxationValidationUtil.validateTaxationRequest;
+
 @RestController
 @RequestMapping(value = "/taxation/v1")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -19,6 +21,7 @@ public class TaxationController {
     @PostMapping(value = "/taxCalculation", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public TaxationResponse getTaxation(@RequestBody TaxationRequest taxationRequest) {
+        validateTaxationRequest(taxationRequest);
         return taxationService.calculateTaxation(taxationRequest);
     }
 

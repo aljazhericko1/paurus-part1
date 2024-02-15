@@ -1,9 +1,18 @@
 package org.paurus.taxation.v1.model;
 
-import lombok.Value;
+import jakarta.persistence.*;
+import lombok.Data;
 
-@Value
+@Entity
+@Table(name = "traders")
+@Data
 public class Trader {
-    String traderId;
-    String countryCodeAlpha3;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    long id;
+    @Column(name = "name")
+    String name;
+    @Column(name = "country_code")
+    String countryCode;
 }

@@ -1,16 +1,11 @@
 package org.paurus.taxation.v1.db;
 
+import org.paurus.taxation.v1.model.Trader;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public class TraderRepository {
-    public String getCountryById(long traderId) {
-        if (traderId == 1L) {
-            return "SLO";
-        } else if (traderId == 2L) {
-            return "AUT";
-        } else {
-            throw new IllegalArgumentException();
-        }
-    }
+public interface TraderRepository extends JpaRepository<Trader, Long> {
 }
