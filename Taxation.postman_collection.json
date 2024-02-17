@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "42239ebe-e2f6-4298-9d8f-ce2483dea848",
+		"name": "Taxation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5242304"
+	},
+	"item": [
+		{
+			"name": "Winnings tax per amount example",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"traderId\": 1,\r\n    \"playedAmount\": 10,\r\n    \"odd\": 3.2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{url}}:{{port}}/taxation/v1/taxCalculation",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"taxation",
+						"v1",
+						"taxCalculation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Winnings tax per rate example",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"traderId\": 1,\r\n    \"playedAmount\": 10,\r\n    \"odd\": 1.2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{url}}:{{port}}/taxation/v1/taxCalculation",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"taxation",
+						"v1",
+						"taxCalculation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "General tax per amount example",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"traderId\": 2,\r\n    \"playedAmount\": 10,\r\n    \"odd\": 3.2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{url}}:{{port}}/taxation/v1/taxCalculation",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"taxation",
+						"v1",
+						"taxCalculation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "General tax per rate example",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"traderId\": 2,\r\n    \"playedAmount\": 10,\r\n    \"odd\": 1.2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{url}}:{{port}}/taxation/v1/taxCalculation",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"taxation",
+						"v1",
+						"taxCalculation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unknown trader",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"traderId\": 4,\r\n    \"playedAmount\": 5,\r\n    \"odd\": 3.2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{url}}:{{port}}/taxation/v1/taxCalculation",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"taxation",
+						"v1",
+						"taxCalculation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unknown tax rate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"traderId\": 3,\r\n    \"playedAmount\": 5,\r\n    \"odd\": 3.2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{url}}:{{port}}/taxation/v1/taxCalculation",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"taxation",
+						"v1",
+						"taxCalculation"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

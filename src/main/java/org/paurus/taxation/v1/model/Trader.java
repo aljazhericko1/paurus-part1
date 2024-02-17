@@ -1,11 +1,15 @@
 package org.paurus.taxation.v1.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @Table(name = "traders")
-@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
 public class Trader {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

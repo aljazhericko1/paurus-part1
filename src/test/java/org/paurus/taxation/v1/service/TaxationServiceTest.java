@@ -11,7 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.paurus.taxation.v1.db.TraderRepository;
 import org.paurus.taxation.v1.model.TaxationRequest;
 import org.paurus.taxation.v1.model.TaxationResponse;
+import org.paurus.taxation.v1.model.Trader;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,7 +34,10 @@ class TaxationServiceTest {
     @MethodSource(value = "parametersForShouldReturnCorrectTaxConfigurationWhenKnownTaxRate")
     void shouldReturnCorrectTaxConfigurationWhenKnownTaxRate(TaxationRequest request, String traderCountry, TaxationResponse expectedResponse) {
         // Given
-        given(traderRepository.getCountryById(anyLong())).willReturn(traderCountry);
+        Trader trader = Trader.builder()
+                .countryCode(traderCountry)
+                .build();
+        given(traderRepository.findById(anyLong())).willReturn(Optional.of(trader));
 
         // When
         TaxationResponse taxationResponse = taxationService.calculateTaxation(request);
@@ -61,18 +66,18 @@ class TaxationServiceTest {
         );
     }
     @Test
-    void shouldThrowExceptionWhenUnknownTraderCountry() {
+    void shouldThrowExceptionWhenNoTraderFound() {
         // Given
         TaxationRequest taxationRequest = TaxationRequest.builder()
                 .traderId(5L)
                 .playedAmount(5L)
                 .decimalOdd(1.2)
                 .build();
-        given(traderRepository.getCountryById(5L)).willReturn(null);
+        given(traderRepository.findById(5L)).willReturn(Optional.empty());
 
         // When, Then
         assertThatThrownBy(() -> taxationService.calculateTaxation(taxationRequest))
-                .hasMessageContaining("Unknown trader country");
+                .hasMessageContaining("Unknown trader");
     }
     @Test
     void shouldThrowExceptionWhenUnknownTaxationRate() {
@@ -82,7 +87,10 @@ class TaxationServiceTest {
                 .playedAmount(5L)
                 .decimalOdd(1.2)
                 .build();
-        given(traderRepository.getCountryById(5L)).willReturn("UNKNOWN");
+        Trader trader = Trader.builder()
+                .countryCode("UNKNOWN")
+                .build();
+        given(traderRepository.findById(5L)).willReturn(Optional.of(trader));
 
         // When, Then
         assertThatThrownBy(() -> taxationService.calculateTaxation(taxationRequest))
