@@ -3,7 +3,8 @@
 This is a simple spring boot application, which can be used to calculate and display the potential tax for a user of a betting site.
 
 ## How to run and test the application
-1. Run .\mvnw spring-boot:run
+1. Clone the repository - git clone https://github.com/aljazhericko/paurus-interview.git
+2. Run .\mvnw spring-boot:run
    The repo has a maven wrapper and this command will run a spring boot application. By default, the server will run on port 8080, if that port is already occupied and server does not start you can append
    '-Dspring-boot.run.arguments=--server.port=8085' to the command to run it on a different port.
 2. Import the postman collection and postman environment
