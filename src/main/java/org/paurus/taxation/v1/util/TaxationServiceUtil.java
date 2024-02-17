@@ -11,12 +11,7 @@ public class TaxationServiceUtil {
     }
 
     /**
-     * @param potentialWinAmount total amount the player would receive in case of winning
-     * @param playedAmount       amount the trader bet
-     * @param taxationRate       tax rate based on trader's country
-     * @return taxAmount the trader will have to pay in case of winning
-     * <p>
-     * Calculates the tax the player will have to pay in case of winning. Uses the taxation rate to determine whether to use general or winnings taxation
+     * Calculates the tax the player will have to pay in case of winning. Uses the taxation rate to determine whether to use general or winnings taxation.
      */
     public static double calculateTax(double potentialWinAmount, double playedAmount, TaxationRate taxationRate) {
         return switch (taxationRate.getTaxationType()) {
@@ -29,12 +24,7 @@ public class TaxationServiceUtil {
     }
 
     /**
-     * @param amountToTax amount based on which the taxation should be done
-     * @param taxRate     tax rate used for percentage based calculation
-     * @param taxAmount   tax amount for amount based calculation
-     * @return taxAmount the trader will have to pay in case of winning
-     * <p>
-     * The method determines, which tax option is more beneficial for the trader and uses it for calculating the tax amount.
+     * Determines which tax option is more beneficial for the trader between using tax rate and tax amount and uses it for calculating the tax.
      */
     private static double calculateTax(double amountToTax, Double taxRate, Double taxAmount) {
         double rateTax = amountToTax * taxRate;
